@@ -554,13 +554,13 @@ class _NerabyshopState extends State<Nerabyshop> {
               },
               child: Text('Close'),
             ),
-            ElevatedButton(
-              onPressed: () {
-                // Add navigation or action here
-                Navigator.of(context).pop();
-              },
-              child: Text('Get Directions'),
-            ),
+            // ElevatedButton(
+            //   onPressed: () {
+            //     // Add navigation or action here
+            //     Navigator.of(context).pop();
+            //   },
+            //   child: Text('Get Directions'),
+            // ),
           ],
         );
       },

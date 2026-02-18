@@ -258,7 +258,14 @@ class _HomepageState extends State<Homepage> {
                               mainAxisAlignment: MainAxisAlignment.end,
                               children: [
                                 InkWell(
-                                  onTap: _showImageSourceDialog,
+                                  onTap: () {
+                                    Navigator.push(
+                                      context,
+                                      MaterialPageRoute(
+                                        builder: (context) => ImageSearchPage(),
+                                      ),
+                                    );
+                                  },
                                   child: Container(
                                     height: 30,
                                     width: 70,
