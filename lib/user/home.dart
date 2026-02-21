@@ -6,8 +6,8 @@ import 'package:close_by_shop/user/pricecomp.dart';
 import 'package:close_by_shop/user/products.dart';
 import 'package:close_by_shop/user/scan.dart';
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
-import 'dart:io';
+// import 'package:image_picker/image_picker.dart';
+// import 'dart:io';
 
 import 'package:shared_preferences/shared_preferences.dart';
 
@@ -28,8 +28,8 @@ class Homepage extends StatefulWidget {
 }
 
 class _HomepageState extends State<Homepage> {
-  File? _selectedImage;
-  final ImagePicker _picker = ImagePicker();
+  // File? _selectedImage;
+  // final ImagePicker _picker = ImagePicker();
 
   @override
   void initState() {
@@ -99,62 +99,62 @@ class _HomepageState extends State<Homepage> {
   }
 
   // Function to show image source options
-  Future<void> _showImageSourceDialog() async {
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          title: Text('Choose Image Source'),
-          content: SingleChildScrollView(
-            child: ListBody(
-              children: <Widget>[
-                ListTile(
-                  leading: Icon(Icons.camera_alt),
-                  title: Text('Camera'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.camera);
-                  },
-                ),
-                ListTile(
-                  leading: Icon(Icons.photo_library),
-                  title: Text('Gallery'),
-                  onTap: () {
-                    Navigator.pop(context);
-                    _pickImage(ImageSource.gallery);
-                  },
-                ),
-              ],
-            ),
-          ),
-        );
-      },
-    );
-  }
+  // Future<void> _showImageSourceDialog() async {
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         title: Text('Choose Image Source'),
+  //         content: SingleChildScrollView(
+  //           child: ListBody(
+  //             children: <Widget>[
+  //               ListTile(
+  //                 leading: Icon(Icons.camera_alt),
+  //                 title: Text('Camera'),
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   _pickImage(ImageSource.camera);
+  //                 },
+  //               ),
+  //               ListTile(
+  //                 leading: Icon(Icons.photo_library),
+  //                 title: Text('Gallery'),
+  //                 onTap: () {
+  //                   Navigator.pop(context);
+  //                   _pickImage(ImageSource.gallery);
+  //                 },
+  //               ),
+  //             ],
+  //           ),
+  //         ),
+  //       );
+  //     },
+  //   );
+  // }
 
   // Function to pick image from camera or gallery
-  Future<void> _pickImage(ImageSource source) async {
-    try {
-      final XFile? pickedFile = await _picker.pickImage(source: source);
+  // Future<void> _pickImage(ImageSource source) async {
+  //   try {
+  //     final XFile? pickedFile = await _picker.pickImage(source: source);
 
-      if (pickedFile != null) {
-        setState(() {
-          _selectedImage = File(pickedFile.path);
-        });
+  //     if (pickedFile != null) {
+  //       setState(() {
+  //         _selectedImage = File(pickedFile.path);
+  //       });
 
-        // Navigate to product results page with the selected image and location
-        Navigator.push(
-          context,
-          MaterialPageRoute(builder: (context) => ImageSearchPage()),
-        );
-      }
-    } catch (e) {
-      print('Error picking image: $e');
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Error selecting image')));
-    }
-  }
+  //       // Navigate to product results page with the selected image and location
+  //       Navigator.push(
+  //         context,
+  //         MaterialPageRoute(builder: (context) => ImageSearchPage()),
+  //       );
+  //     }
+  //   } catch (e) {
+  //     print('Error picking image: $e');
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text('Error selecting image')));
+  //   }
+  // }
 
   @override
   Widget build(BuildContext context) {

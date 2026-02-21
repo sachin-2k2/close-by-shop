@@ -264,11 +264,13 @@ class _OrderhistoryState extends State<Orderhistory> {
                 SizedBox(width: 12),
                 ElevatedButton(
                   onPressed: () {
+                     List<int> productIds = products.map((p) => p['product_id'] as int).toList();
                     Navigator.push(
                       context,
                       MaterialPageRoute(
                         builder: (context) => Product_Complaint(
                           orderid: orderId,
+                          productIds: productIds,
                         ),
                       ),
                     );

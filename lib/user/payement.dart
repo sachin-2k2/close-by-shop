@@ -9,16 +9,19 @@ class PaymentPage extends StatefulWidget {
   final double totalAmount;
   final int itemCount;
   final List<dynamic> cartItems;
-  final List<int> cartIds;
+  
+
+  final List<int> productIds;   // ✅ changed
+  final List<int> quantities;
 
   const PaymentPage({
     super.key,
     required this.totalAmount,
     required this.itemCount,
     required this.cartItems,
-    required this.cartIds,
+    required this.productIds,   // ✅ changed
+    required this.quantities,
   });
-
   @override
   State<PaymentPage> createState() => _PaymentPageState();
 }
@@ -106,7 +109,8 @@ class _PaymentPageState extends State<PaymentPage> {
         data: {
           'loginid': loginid,
           'total_amount': widget.totalAmount,
-          'cartid': widget.cartIds, // Use the cart IDs list
+
+          'PRODUCTID': widget.productIds, // Use the cart IDs list
           'payment_method': paymentMethod,
           'payment_status': 'completed',
           // 'order_date': DateTime.now().toIso8601String(),

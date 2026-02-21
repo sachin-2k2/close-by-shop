@@ -108,6 +108,7 @@ class _NerabyshopState extends State<Nerabyshop> {
 
       print("User Location - Lat: $_userLatitude, Long: $_userLongitude");
 
+
       if (_userLatitude == null || _userLongitude == null) {
         setState(() {
           _errorMessage =

@@ -207,86 +207,140 @@ class _CartScreenState extends State<CartScreen> {
     }
   }
 
-  void _proceedToCheckout() {
-    if (cartItems.isEmpty) {
-      ScaffoldMessenger.of(
-        context,
-      ).showSnackBar(SnackBar(content: Text('Your cart is empty')));
-      return;
-    }
+  // void _proceedToCheckout() {
+  //   if (cartItems.isEmpty) {
+  //     ScaffoldMessenger.of(
+  //       context,
+  //     ).showSnackBar(SnackBar(content: Text('Your cart is empty')));
+  //     return;
+  //   }
 
-    showDialog(
-      context: context,
-      builder: (BuildContext context) {
-        return AlertDialog(
-          backgroundColor: Colors.white,
-          shape: RoundedRectangleBorder(
-            borderRadius: BorderRadius.circular(20),
-          ),
-          title: Row(
-            children: [
-              Icon(Icons.shopping_cart_checkout, color: Colors.purple.shade800),
-              SizedBox(width: 8),
-              Text('Checkout', style: TextStyle(color: Colors.purple.shade800)),
-            ],
-          ),
-          content: Column(
-            mainAxisSize: MainAxisSize.min,
-            crossAxisAlignment: CrossAxisAlignment.start,
-            children: [
-              Text('Proceed to checkout with:'),
-              SizedBox(height: 8),
-              Text(
-                '${cartItems.length} items',
-                style: TextStyle(fontWeight: FontWeight.bold),
-              ),
-              SizedBox(height: 4),
-              Text(
-                'Total: ₹${_grandTotal.toStringAsFixed(2)}',
-                style: TextStyle(
-                  fontSize: 18,
-                  fontWeight: FontWeight.bold,
-                  color: Colors.green.shade700,
-                ),
-              ),
-            ],
-          ),
-          actions: [
-            TextButton(
-              onPressed: () => Navigator.of(context).pop(),
-              child: Text(
-                'Cancel',
-                style: TextStyle(color: Colors.grey.shade600),
-              ),
-            ),
-            ElevatedButton(
-              onPressed: () {
-                List<int> cartIds = cartItems.map((item) => item['id'] as int).toList();
-                // sends only one id
-                Navigator.pushAndRemoveUntil(
-                  context,
-                  MaterialPageRoute(
-                    builder: (context) => PaymentPage(
-                      totalAmount: _grandTotal,
-                      itemCount: cartItems.length,
-                      cartItems: cartItems,
-                      cartIds: cartIds,
-                    ),
-                  ),
-                  (route) => route.isFirst,
-                );
-              },
-              style: ElevatedButton.styleFrom(
-                backgroundColor: Colors.purple.shade800,
-                foregroundColor: Colors.white,
-              ),
-              child: Text('Proceed to Pay'),
-            ),
-          ],
-        );
-      },
+  //   showDialog(
+  //     context: context,
+  //     builder: (BuildContext context) {
+  //       return AlertDialog(
+  //         backgroundColor: Colors.white,
+  //         shape: RoundedRectangleBorder(
+  //           borderRadius: BorderRadius.circular(20),
+  //         ),
+  //         title: Row(
+  //           children: [
+  //             Icon(Icons.shopping_cart_checkout, color: Colors.purple.shade800),
+  //             SizedBox(width: 8),
+  //             Text('Checkout', style: TextStyle(color: Colors.purple.shade800)),
+  //           ],
+  //         ),
+  //         content: Column(
+  //           mainAxisSize: MainAxisSize.min,
+  //           crossAxisAlignment: CrossAxisAlignment.start,
+  //           children: [
+  //             Text('Proceed to checkout with:'),
+  //             SizedBox(height: 8),
+  //             Text(
+  //               '${cartItems.length} items',
+  //               style: TextStyle(fontWeight: FontWeight.bold),
+  //             ),
+  //             SizedBox(height: 4),
+  //             Text(
+  //               'Total: ₹${_grandTotal.toStringAsFixed(2)}',
+  //               style: TextStyle(
+  //                 fontSize: 18,
+  //                 fontWeight: FontWeight.bold,
+  //                 color: Colors.green.shade700,
+  //               ),
+  //             ),
+  //           ],
+  //         ),
+  //         actions: [
+  //           TextButton(
+  //             onPressed: () => Navigator.of(context).pop(),
+  //             child: Text(
+  //               'Cancel',
+  //               style: TextStyle(color: Colors.grey.shade600),
+  //             ),
+  //           ),
+  //           ElevatedButton(
+  //             onPressed: () {
+  //               List<int> cartIds = cartItems.map((item) => item['id'] as int).toList();
+  //               // sends only one id
+  //               Navigator.pushAndRemoveUntil(
+  //                 context,
+  //                 MaterialPageRoute(
+  //                   builder: (context) => PaymentPage(
+  //                     totalAmount: _grandTotal,
+  //                     itemCount: cartItems.length,
+  //                     cartItems: cartItems,
+  //                     cartIds: cartIds,
+  //                   ),
+  //                 ),
+  //                 (route) => route.isFirst,
+  //               );
+  //             },
+  //             style: ElevatedButton.styleFrom(
+  //               backgroundColor: Colors.purple.shade800,
+  //               foregroundColor: Colors.white,
+  //             ),
+  //             child: Text('Proceed to Pay'),
+  //           ),
+  //         ],
+  //       );
+  //     },
+  //   );
+  // }
+
+
+
+void _proceedToCheckout() {
+  if (cartItems.isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      SnackBar(content: Text('Your cart is empty')),
     );
+    return;
   }
+
+  showDialog(
+    context: context,
+    builder: (BuildContext context) {
+      return AlertDialog(
+        title: Text("Checkout"),
+        content: Text("Proceed to payment?"),
+        actions: [
+          TextButton(
+            onPressed: () => Navigator.pop(context),
+            child: Text("Cancel"),
+          ),
+          ElevatedButton(
+            onPressed: () {
+
+              // ✅ PRODUCT IDs (NOT cart id)
+              List<int> productIds =
+                  cartItems.map((item) => item['Product'] as int).toList();
+
+              // ✅ Quantities
+              List<int> quantities =
+                  cartItems.map((item) => item['Qty'] as int? ?? 1).toList();
+
+              Navigator.pushAndRemoveUntil(
+                context,
+                MaterialPageRoute(
+                  builder: (context) => PaymentPage(
+                    totalAmount: _grandTotal,
+                    itemCount: cartItems.length,
+                    cartItems: cartItems,
+                    productIds: productIds,   // ✅ correct one
+                    quantities: quantities,
+                  ),
+                ),
+                (route) => route.isFirst,
+              );
+            },
+            child: Text("Proceed to Pay"),
+          ),
+        ],
+      );
+    },
+  );
+}
 
   // Future<void> _processCheckout() async {
   //   try {
